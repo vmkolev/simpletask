@@ -1,0 +1,1 @@
+{"rsync":{"/data":{"type":"rsync","guestpath":"/data","hostpath":"/home/vkolev/MyGitRepo/simpletask","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
