@@ -3,8 +3,7 @@
   become: yes
   gather_facts: false
   vars: 
-    project_dir: /app/simpletask/
-    local_repo_dir: /app/testrepo
+    project_dir: /app/
     project_repo: https://github.com/vmkolev/simpletask.git
 
   tasks:

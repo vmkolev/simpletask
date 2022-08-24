@@ -5,14 +5,14 @@
 
   - name: Creates PROJECT directory
     file:
-      path: "{{ local_repo_dir }}"
+      path: "{{ project_dir }}"
       state: directory
 
   - name: Get  Project from git
     git:
       repo: "{{ project_repo }}"
-      dest: "{{ local_repo_dir }}"
+      dest: "{{ project_dir }}"
       clone: yes
       update: yes
       force: yes
-    become: true      
+#    become: true      

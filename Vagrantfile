@@ -43,7 +43,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Specify username and private key path
     override.ssh.username = system['user']
-    override.ssh.private_key_path = '~/.ssh/testsrv.pem'
+    override.ssh.private_key_path = system['key_path']
 
 #    aws.user_data = "cd /vagrant/ansible/scripts/ && setup_vm.sh"
     end

@@ -3,6 +3,7 @@ instance_type: "t2.micro"
 region: "eu-central-1"
 ami: "ami-065deacbcaac64cf2"
 user: "ubuntu"
+key_path: "~/.ssh/testsrv.pem"
 security_groups: ["vagrant"]
 keypair_name: "testsrv" 
 shell_path: "./scripts/setup_vm.sh"
