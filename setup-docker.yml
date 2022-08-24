@@ -8,13 +8,36 @@
 
   tasks:
 
+# Configuration repo Git
+  - name: Setup git configuration
+    git_config:
+      name="{{ item.name }}"
+      scope=global
+      value="{{ item.value }}"
+    with_items:
+      - {name: "user.name",  value: "vmkolev" }
+      - {name: "user.email", value: "kolevvm@gmail.com" }
+      - {name: "ui.color",   value: "True" }
+    become: true
+
 # Download repo from Git
-  - name: Download gepo
-    include: git.yml
+  - name: Creates PROJECT directory
+    file:
+      path: "{{ project_dir }}"
+      state: directory
+
+  - name: Get  Project from git
+    git:
+      repo: "{{ project_repo }}"
+      dest: "{{ project_dir }}"
+      clone: yes
+      update: yes
+      force: yes
+#    become: true    
 
 # Download packages
   - name: install packages
-    include: packages.yml
+    include: ./simpletask/packages.yml
 
 # Prepare local ENV for docker
   - name: Install Docker Dependencies
