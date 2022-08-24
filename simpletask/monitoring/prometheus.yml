@@ -20,17 +20,30 @@ rule_files:
 # Here it's Prometheus itself.
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: 'prometheus'
+  - job_name: 'Prometheus'
     static_configs:
     - targets:
       - localhost:9090
 
-  - job_name: 'Dockers'
+  - job_name: 'Docker'
     static_configs:
-    - targets:
-      - localhost:9323
+      - targets: ["localhost:9323"]
 
   - job_name: 'MySql'
+    metrics_path: /metrics
     static_configs:
     - targets:
-      - localhost:3306
+      - mysql-exporter:9104
+
+  - job_name: "docker-containers"
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock # You can also use http/https to connect to the Docker daemon.
+    relabel_configs:
+      # Only keep containers that have a `prometheus-job` label.
+      - source_labels: [__meta_docker_container_label_prometheus_job]
+        regex: .+
+        action: keep
+      # Use the task labels that are prefixed by `prometheus-`.
+      - regex: __meta_docker_container_label_prometheus_(.+)
+        action: labelmap
+        replacement: $1

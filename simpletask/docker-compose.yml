@@ -62,7 +62,7 @@ services:
 
 #Load Balancer
   lb:
-    restart: always
+    restart: unless-stopped
     build: ./lbserver
     container_name: lbserver
     ports:
@@ -71,16 +71,19 @@ services:
 
 #Monitoring
   prometheus:
-    restart: always
-    image: bitnami/prometheus
+    restart: unless-stopped
+    image: prom/prometheus
     container_name: prometheus
-    ports: 
-      - "9090:9090"
+    expose:
+      - 9090
     volumes:
       - ./monitoring/prometheus.yml:/opt/bitnami/prometheus/conf/prometheus.yml
+    command:
+          - '--config.file=/etc/prometheus/prometheus.yml'
+          - '--web.enable-lifecycle'
 
   mysql-exporter:
-    restart: always
+    restart: unless-stopped
     image: prom/mysqld-exporter
     container_name: mysql-exporter
     ports:
