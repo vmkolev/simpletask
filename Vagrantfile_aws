@@ -9,8 +9,7 @@ guests = system['guest']
 Vagrant.require_version '>= 1.6.0'
 VAGRANTFILE_API_VERSION = '2'
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'aws'
-ENV['AWS_ACCESS_KEY_ID'] = 'AKIAZIN7DNUV7TDSR5NE'
-ENV['AWS_SECRET_ACCESS_KEY'] = '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'
+
 
 class Hash
     def slice(*keep_keys)
