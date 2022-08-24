@@ -13,6 +13,6 @@ system:
     bridge: "#$default_network_interface"
   artifacts_dir:
     host: .
-    guest: "/app"
+    guest: "/data"
   shell_path:
     dir: "./setup_vm.sh"

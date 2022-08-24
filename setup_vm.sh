@@ -12,7 +12,7 @@ apt-get update && apt-get install tree ansible -y
 
 # follow folder structure
 echo "Setup to project folder :"
-project_dir="/app"
+project_dir="/data"
 
 # replace ip for prometheus monitoring
 #sed -i "s/localhost:9323/$ips:9323/" $project_dir/prometheus.yml
