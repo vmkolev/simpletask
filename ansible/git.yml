@@ -1,0 +1,18 @@
+---
+# Configuration repo Git
+  - name: Download gepo
+    include: git-config.yml
+
+  - name: Creates PROJECT directory
+    file:
+      path: "{{ local_repo_dir }}"
+      state: directory
+
+  - name: Get  Project from git
+    git:
+      repo: "{{ project_repo }}"
+      dest: "{{ local_repo_dir }}"
+      clone: yes
+      update: yes
+      force: yes
+    become: true      

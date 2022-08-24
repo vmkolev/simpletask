@@ -1,0 +1,52 @@
+- hosts: localhost
+  connection: local
+  become: yes
+  gather_facts: false
+  vars: 
+    project_dir: /app/simpletask/
+    local_repo_dir: /app/testrepo
+    project_repo: https://github.com/vmkolev/simpletask.git
+
+  tasks:
+
+# Download repo from Git
+  - name: Download gepo
+    include: git.yml
+
+# Download packages
+  - name: install packages
+    include: packages.yml
+
+# Prepare local ENV for docker
+  - name: Install Docker Dependencies
+    shell: |
+        sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+
+# Install Docker compose
+  - name: Install docker-compose
+    shell: |
+        sudo apt install docker-ce docker-ce-cli containerd.io -y
+        sudo usermod -aG docker $USER
+        newgrp docker
+
+# Enable service 
+  - name: Start and Enable Docker Daemon
+    service:
+      name: docker
+      state: started
+      enabled: true
+
+#  - name: firewall
+#    shell: firewall-cmd --add-port={9000,80,3306,9323,9090,9104}/tcp --permanent && firewall-cmd --reload
+
+  - name: Configure Docker metrics for Prometheus
+    become: yes
+    copy:
+      src: "{{ project_dir }}/monitoring/daemon.json"
+      dest: /etc/docker/
+
+#  - name: Start Application environment via docker-compose
+#    shell: docker-compose up -d

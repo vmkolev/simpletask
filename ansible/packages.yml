@@ -1,0 +1,7 @@
+  - name: Install all packages
+    apt: 
+      name:
+        - "{{ item }} "
+      update_cache: yes 
+      state: latest
+    loop: [ 'wget','ca-certificates','curl','gnupg','lsb-release','git','tree' ]

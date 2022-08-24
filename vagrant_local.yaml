@@ -1,0 +1,18 @@
+server:
+  ip_address: 192.168.99.50
+  hostname: "server"
+  name: "Server"
+
+system:
+  box: "UbuntuSrv-22.04"
+  vm_cpu: 1
+  vm_memory: 2048
+  network:
+    netmask: "255.255.255.0"
+    type: "static"
+    bridge: "#$default_network_interface"
+  artifacts_dir:
+    host: .
+    guest: "/data"
+  shell_path:
+    dir: "./scripts/setup_vm.sh"

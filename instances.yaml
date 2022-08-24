@@ -1,0 +1,10 @@
+---
+instance_type: "t2.micro"
+region: "eu-central-1"
+ami: "ami-065deacbcaac64cf2"
+user: "ubuntu"
+security_groups: ["vagrant"]
+keypair_name: "testsrv" 
+shell_path: "./scripts/setup_vm.sh"
+host: .
+guest: "/app"
