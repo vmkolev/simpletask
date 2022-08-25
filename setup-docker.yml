@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: localhost 
   connection: local
   become: yes
   gather_facts: false
@@ -39,30 +39,41 @@
   - name: Install Docker Dependencies
     shell: |
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" |>
         curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         chmod +x /usr/local/bin/docker-compose
 
 # Install Docker compose
   - name: Install docker-compose
-    apt:
-      name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-
-  - name: Create user docker
     shell: |
+        apt-get update 
+        apt-get install docker-ce docker-ce-cli containerd.io -y
+        pip install docker-py
         usermod -aG docker $USER
         newgrp docker
 
-  - name: firewall
-    shell: |
-        ips="ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}'"
-        export ips
-        sed -i "s/localhost:9323/$ips:9323/" "{{ project_dir }}/prometheus.yml"
-        sed -i "s/localhost:9323/$ips:9323/" /etc/docker/daemon.json
+  - name: Get IP for Docker monitoring
+    shell: ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}'
+    register: ipaddr
+    run_once: true
 
+  - set_fact: 
+      ipaddr={{ ipaddr.stdout }}
+
+  - debug: var=ipaddr
+    run_once: true
+
+  - name: Set local ip address to prometheus.yml
+    replace:
+      path: "{{ project_dir }}/monitoring/prometheus.yml" 
+      regexp: 'localhost:9323'
+      replace: '{{ipaddr}}:9323'
+
+  - name: Set local ip address to daemon.json
+    replace:
+      path: "{{ project_dir }}/monitoring/daemon.json" 
+      regexp: 'localhost:9323'
+      replace: '{{ipaddr}}:9323'
 
 ## Set metrics for Prometheus in docker folder before start docker service
   - name: Configure Docker metrics for Prometheus
@@ -86,6 +97,4 @@
   - shell:
       chdir: "{{ project_dir }}"
       cmd: docker-compose up -d
-
-
 
