@@ -1,0 +1,13 @@
+---
+aws_access_key_id: "put-your-key-id-here"
+aws_secret_access_key: "put-your-access-key-id-here"
+instance_type: "your-instanse"
+region: "your-region"
+ami: "ami-"
+user: "your-user"
+key_path: "path-to-key.pem"
+security_groups: ["your-sec-group-in-AWS"]
+keypair_name: "name-of-the-key" 
+shell_path: "./setup_vm.sh"
+host: .
+guest: "/data"
