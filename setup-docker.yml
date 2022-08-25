@@ -63,24 +63,28 @@
         usermod -aG docker $USER
         newgrp docker
 
-# Enable service 
-  - name: Start and Enable Docker Daemon
-    service:
-      name: docker
-      state: started
-      enabled: true
-
-#  - name: firewall
-#    shell: firewall-cmd --add-port={9000,80,3306,9323,9090,9104}/tcp --permanent && firewall-cmd --reload
-
+# Set metrics for Prometheus in docker folder before start docker service
   - name: Configure Docker metrics for Prometheus
     become: yes
     copy:
       src: "{{ project_dir }}/monitoring/daemon.json"
       dest: /etc/docker/
 
-#  - name: Start Application environment via docker-compose
-#    shell: "cd {{ project_dir }} && docker-compose build"
+# Enable & start service 
+  - name: Start and Enable Docker Daemon
+    service:
+      name: docker
+      state: started
+      enabled: true
 
-#  - name: Run docker-compose
-#    shell: docker-compose up -d
+# If it is Red Hat base distro should enable some ports
+#  - name: firewall
+#    shell: firewall-cmd --add-port={9000,80,3306,9323,9090,9104}/tcp --permanent && firewall-cmd --reload
+
+# Build the docker ENV
+  - name: Start Application environment via docker-compose
+    shell: "cd {{ project_dir }} && docker-compose build"
+
+# Run docker-compose as daemon
+  - name: Run docker-compose
+    shell: docker-compose up -d
