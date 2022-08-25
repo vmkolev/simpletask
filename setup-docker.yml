@@ -105,3 +105,16 @@
       chdir: "{{ project_dir }}"
       cmd: docker-compose up -d
 
+# Check the status of the containers
+  - name: Status of container
+    shell:      
+      chdir: "{{ project_dir }}"
+      cmd: docker-compose ps -a
+    register: statdocker
+    run_once: true
+
+  - set_fact: 
+      stddoc={{ statdocker.stdout_lines }}
+
+  - debug: var=stddoc
+    run_once: true
