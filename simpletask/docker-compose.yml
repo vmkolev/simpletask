@@ -62,7 +62,7 @@ services:
 
 #Load Balancer
   lb:
-    restart: unless-stopped
+    restart: always
     build: ./lbserver
     container_name: lbserver
     ports:
@@ -72,10 +72,10 @@ services:
 #Monitoring
   prometheus:
     restart: unless-stopped
-    image: prom/prometheus
+    image: bitnami/prometheus
     container_name: prometheus
-    expose:
-      - 9090
+    ports: 
+      - "9090:9090"
     volumes:
       - ./monitoring/prometheus.yml:/opt/bitnami/prometheus/conf/prometheus.yml
     command:

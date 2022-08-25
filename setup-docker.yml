@@ -79,8 +79,8 @@
       src: "{{ project_dir }}/monitoring/daemon.json"
       dest: /etc/docker/
 
-  - name: Start Application environment via docker-compose
-    shell: "cd {{ project_dir }} && docker-compose build"
+#  - name: Start Application environment via docker-compose
+#    shell: "cd {{ project_dir }} && docker-compose build"
 
 #  - name: Run docker-compose
 #    shell: docker-compose up -d
