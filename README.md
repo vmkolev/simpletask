@@ -14,13 +14,24 @@ The purpose of this project is to demonstrate automated deployment for an applic
 
 The environment uses Debian-like distros and uses apt package manager.
 
-Clone the git repo locally and run setup_vm.sh script to deploy the environment.
 
-The simple application is reachable through your browser with http://your-ip, press F5 to load the page and see which container is in use.
+You could deploy this application in two deployment scenario:
+- locally: 
+    
+     Vagrantfile is used and vagrant.yaml must be populate with proper values.
+- cloud provider as AWS:
+    
+     In this scenario you should use Vagrantfile_AWS and instances.yaml file must be populate with proper values.
+     Please note that you will need more that t2.micro type of instance because of count of the containers and you will need more that 1Gb of RAM and least 8Gb of disk space.
 
-The monitoring application Prometheus is located: http://your-ip:9090/targets
 
-PHPAdmin application is reachable on http://your-ip:8085 and uses the credentials to access MySQL.
+The steps after clone locally the repo are:
+- Clone the gip repo in an empty folder
+- Populate the proper vagrant file.
+- Run command vagrant up to create virtual machine. 
+- Open your browser and access the application: http://your-ip, press F5 to load the page and see which container is in use.
+- Monitor the application with Prometheus which is accessible: http://your-ip:9090/targets
+- Manage your MySQL database with UI with PHPAdmin application is reachable on http://your-ip:8085 and uses the same credentials configured MySQL.
 
 
 Have fun.
