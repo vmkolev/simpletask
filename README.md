@@ -30,8 +30,8 @@ The steps after clone locally the repo are:
 - Populate the proper vagrant file.
 - Run command vagrant up to create virtual machine. 
 - Open your browser and access the application: http://your-ip, press F5 to load the page and see which container is in use.
-- Monitor the application with Prometheus which is accessible: http://your-ip:9090/targets
-- Manage your MySQL database with UI with PHPAdmin application is reachable on http://your-ip:8085 and uses the same credentials configured MySQL.
+- Monitor the application with Prometheus which reachable through your browser: http://your-ip:9090/targets
+- Manage your MySQL database with UI through PHPAdmin application reachable on http://your-ip:8085 and uses the same credentials as MySQL has been configured.
 
 
 Have fun.
