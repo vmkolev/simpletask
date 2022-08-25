@@ -29,7 +29,7 @@ The steps after clone locally the repo are:
 - Clone the gip repo in an empty folder
 - Populate the proper vagrant file.
 - Run command vagrant up to create virtual machine. 
-- Open your browser and access the application: http://your-ip, press F5 to load the page and see which container is in use. If the deployment is in AWS please use your public DNS or IP.
+- Open your browser and access the application: http://your-ip, press F5 to reload the page and see which container is in use. If the deployment is in AWS please use your public DNS or IP.
 - Monitor the application with Prometheus which is reachable through your browser: http://your-ip:9090/targets
 - Manage your MySQL database with UI through PHPAdmin application reachable on http://your-ip:8085 and uses the same credentials as MySQL has been configured.
 
