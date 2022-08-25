@@ -22,7 +22,7 @@ You could deploy this application in two deployment scenario:
 - cloud provider as AWS:
     
      In this scenario you should use Vagrantfile_AWS and instances.yaml file must be populate with proper values.
-     Please note that you will need more that t2.micro type of instance because of number of the containers. You will need more that 1Gb of RAM and at least 8Gb of disk space.
+     Please note that you will need more that t2.micro type of instance because of number of the containers. You will need more that 1Gb of RAM and at least 8Gb of disk free space independs of the used distro.
 
 
 The steps after clone locally the repo are:
