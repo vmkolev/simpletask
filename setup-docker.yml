@@ -93,7 +93,7 @@
   - name: Start and Enable Docker Daemon
     service:
       name: docker
-      state: started
+      state: restarted
       enabled: true
 
 # If it is Red Hat base distro should enable some ports
