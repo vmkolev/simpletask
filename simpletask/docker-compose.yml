@@ -6,6 +6,7 @@ services:
     build: ./php
     volumes:
       - ./src/mysql1.php:/var/www/html/index.php
+      - ./src/testdb.php:/var/www/html/testdb.php
     links:
       - mysql
     ports:
@@ -16,6 +17,7 @@ services:
     build: ./php
     volumes:
       - ./src/mysql2.php:/var/www/html/index.php
+      - ./src/testdb.php:/var/www/html/testdb.php
     links:
       - mysql
     ports:
@@ -26,6 +28,7 @@ services:
     build: ./php
     volumes:
       - ./src/mysql3.php:/var/www/html/index.php
+      - ./src/testdb.php:/var/www/html/testdb.php
     links:
       - mysql
     ports:
